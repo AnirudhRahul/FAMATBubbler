@@ -1,10 +1,9 @@
-
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js'></script>
 
-<form id="metaData" onsubmit="demoFromHTML()">
+<form>
   <h4>Enrollment List:</h4>
   <textarea id="enrollment" rows="20" cols="10"></textarea><br><br>
-  <button type="button" onclick="readPDF()">Load Enrollment list</button>
+  <button type="button" onclick="readEnrollment()">Load Enrollment list</button>
   <h4>School name:</h4>
   <input type="text" id="school">
 
@@ -19,69 +18,7 @@
 
   </div>
 <br>
-<style>
-  td, tr, th {
-      border: 1px solid black;
-  }
-  table {
-      border-collapse: collapse;
-  }
-  .nameCol{
-    min-width: 200px;
-    height: 25px;
-  }
-  .idCol{
-    min-width: 50px;
-    height: 25px;
-  }
 
-  span {
-      width: 100%;
-      display: block;
-  }
-  .x{ cursor: pointer; }
-  textarea {
-    border-color: black;
-    border: 1px solid black;
-    min-width: 800px
-  }
-  .error{
-    color: red;
-    border-radius: 6px;
-  }
-  .addButton{
-    border: none;
-    color: white;
-    border-radius: 6px;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    min-width: 310px;
-    background-color: #4caf50;
-  }
-  .filterButton{
-    border-radius: 6px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 16px;
-    width: 80px;
-    height: 50px;
-    color: #F0F0F0;
-    background-color: #9932CC;
-    border-color: #4B0082;
-  }
-  #filterBox{
-      display: none;
-  }
-  .addButton:hover{
-    background-color: #43a047;
-    cursor:pointer;
-
-  }
-</style>
 <h3>Student List:</h3>
   <table id="students">
       <tbody>
@@ -109,7 +46,8 @@
 	<input type="checkbox" checked>9th
   </span>
   <br>
-  <button type="button" onclick="demoFromHTML()">submit</button>
+  Filename:<input type="text" id="filename" value="BubbledAnswerSheet"><br><br>
+  <button id="makePDF" type="button" onclick="createPDF()">Create PDF</button>
   <p class="error" id="error1"></p>
   <h2>
   Advanced Features
@@ -188,7 +126,7 @@
     drawTest(pdf,division);
     drawID(pdf,studentID, bubbles);
   }
-  function demoFromHTML() {
+  function createPDF() {
 		var doc = new jsPDF({
       orientation: 'portrait',
       unit: 'pt',
@@ -215,7 +153,6 @@
     var table = document.getElementsByTagName("tbody")[0];
     var kids = table.getElementsByTagName("td");
     var team = table.getElementsByClassName("teamBox");
-    console.log(green)
     for(var i=0;i<kids.length;i+=2){
       try{
         if(green[i/2+1]){
@@ -228,12 +165,12 @@
         }
         console.log('Page '+i+' Worked')
       }catch(err){
-        document.getElementById("error1").innerHTML='Error\n'+err;
+        document.getElementById("error1").innerHTML+='Row #'+(i+1)+' '+err+'<br>';
         console.log(err);
       }
     }
-
-    doc.save('test.pdf');
+    var filename=document.getElementById("filename").value;
+    doc.save(filename+'.pdf');
 		return false;
 	}
 
@@ -270,7 +207,7 @@
     counter++;
     return false;
   }
-  function readPDF(){
+  function readEnrollment(){
     var text = document.getElementById("enrollment").value.trim();
     var lines = text.split('\n');
     var name = '';
@@ -304,6 +241,8 @@
       document.getElementById("error2").innerHTML='Error Missing Delimeter';
       return false;
     }
+
+
   }
   function getAction(){
     var radios = document.getElementsByName('actionType');
@@ -323,5 +262,79 @@
 
     return false;
   }
-
  </script>
+
+ <style>
+   td, tr, th {
+       border: 1px solid black;
+   }
+   table {
+       border-collapse: collapse;
+   }
+   .nameCol{
+     min-width: 200px;
+     height: 25px;
+   }
+   .idCol{
+     min-width: 50px;
+     height: 25px;
+   }
+
+   span {
+       width: 100%;
+       display: block;
+   }
+   .x{ cursor: pointer; }
+   textarea {
+     border-color: black;
+     border: 1px solid black;
+     min-width: 800px
+   }
+   .error{
+     color: red;
+     border-radius: 6px;
+   }
+   .addButton{
+     border: none;
+     color: white;
+     border-radius: 6px;
+     padding: 10px 10px;
+     text-align: center;
+     text-decoration: none;
+     display: inline-block;
+     font-size: 16px;
+     margin: 4px 2px;
+     min-width: 310px;
+     background-color: #4caf50;
+   }
+   .filterButton{
+     border-radius: 6px;
+     text-align: center;
+     font-weight: bold;
+     font-size: 16px;
+     width: 80px;
+     height: 50px;
+     color: #F0F0F0;
+     background-color: #9932CC;
+     border-color: #4B0082;
+   }
+   #filterBox{
+       display: none;
+   }
+   #makePDF{
+     border-radius: 6px;
+     text-align: center;
+     font-weight: bold;
+     font-size: 16px;
+     width: 160px;
+     height: 50px;
+     color: #F0F0F0;
+     background-color: #0080ff;
+     border-color: #00bfff;
+   }
+   .addButton:hover{
+     background-color: #43a047;
+     cursor:pointer;
+
+   }
+ </style>
