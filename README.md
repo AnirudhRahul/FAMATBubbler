@@ -1,9 +1,9 @@
-#FAMAT Bubbler
-##What is this?
+# FAMAT Bubbler
+## What is this?
 A webpage that will let you automatically create a pdf of FAMAT answersheets, that already have their IDs bubbled in.
-##Why use this?
+## Why use this?
 It can save you some time, and your less likely to have scoring problems with your answersheets
-##How do I use this?
+## How do I use this?
 Watch the tutorial
-##Where can I leave my comments and suggestions?
+## Where can I leave my comments and suggestions?
 On the issues tab above
