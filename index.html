@@ -52,7 +52,7 @@
   <h2>
   Advanced Features
   </h2>
-  <button type="button" class="filterButton" onclick="toggleFilter()">Filter</button>
+  <button type="button" id="filterButton" onclick="toggleFilter()">Filter◄</button>
   <div id="filterBox">
   <h4> Input List(put each student on a new line) </h4>
   <textarea id="filter" rows="20" cols="10"></textarea><br><br>
@@ -85,9 +85,11 @@
      var x = document.getElementById("filterBox");
      if (visible) {
        x.style.display = "none";
+       document.getElementById("filterButton").innerHTML="Filter◄"
      } else {
        x.style.display = "block";
-       window.scrollTo(0,900);
+       document.getElementById("filterButton").innerHTML="Filter▼"
+       window.scrollTo(0,100000);
      }
      visible=!visible;
    }
@@ -231,18 +233,57 @@
     document.getElementById("school").value=schoolName;
 
   }
+  function clearRows(){
+    for(var i=1;i<green.length;i+=1)
+        if(green[i])
+          deleteRow(i);
+  }
   function filterStudentList(){
     var delimeter=document.getElementById("delimiter").value;
     if(!(getAction()&&getOrder())){
-      document.getElementById("error2").innerHTML='Error Missing Input Fields';
+      document.getElementById("error2").innerHTML+='Error Missing Input Fields<br>';
       return false;
     }
     if(!delimeter){
-      document.getElementById("error2").innerHTML='Error Missing Delimeter';
+      document.getElementById("error2").innerHTML+='Error Missing Delimeter<br>';
       return false;
     }
-
-
+    var action=getAction();
+    var order=getOrder();
+    if(action=='only')
+      clearRows();
+    var text = document.getElementById("filter").value.trim();
+    console.log(text);
+    var lines = text.split('\n');
+    console.log(lines);
+    var table = document.getElementsByTagName("tbody")[0];
+    var kids = table.getElementsByTagName("td");
+    for(var i=0;i<lines.length;i++){
+      try{
+        var line = lines[i];
+        var split = line.split(delimeter);
+        var toMatch='';
+        if(order=='firstlast')
+          toMatch=split[0]+' '+split[1];
+        else
+          toMatch=split[1]+' '+split[0];
+        for(var k=0;k<kids.length;k+=2){
+          var name = kids[k].innerText;
+          var matched = name==toMatch
+          if(matched&&action=='only'){
+            deleteRow(k/2+1);
+          }
+          if(matched&&action!='only'){
+            if(green[k/2+1])
+              deleteRow(k/2+1);
+          }
+        }
+      }catch(err){
+        document.getElementById("error2").innerHTML+='Row #'+(i+1)+' '+err+'<br>';
+      }
+    }
+    scrollTo(0,690);
+    console.log('FILTERED')
   }
   function getAction(){
     var radios = document.getElementsByName('actionType');
@@ -307,7 +348,7 @@
      min-width: 310px;
      background-color: #4caf50;
    }
-   .filterButton{
+   #filterButton{
      border-radius: 6px;
      text-align: center;
      font-weight: bold;
