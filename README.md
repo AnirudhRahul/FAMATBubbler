@@ -5,7 +5,7 @@ You can look at an example here: https://github.com/AnirudhRahul/FAMATBubbler/bl
 
 The active link to the website is: https://anirudhrahul.github.io/FAMATBubbler/
 ## Purpose
-This tool was designed to help schools(especially those with a lot of students) save some time when bubbling their answersheets for FAMAT competitions. This should also help reduce the likelihood of your answersheet not scanning correctly.
+This tool was designed to help schools(especially those with a lot of students) save some time when bubbling their answersheets for FAMAT competitions. It should also help reduce the likelihood of your answersheet not scanning correctly.
 ## How do I use this?
 Watch the tutorial: https://youtu.be/UNxnpLJSk4Q
 ## Where can I leave my comments and suggestions?
