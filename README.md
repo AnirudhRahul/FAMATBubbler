@@ -1,4 +1,4 @@
-# [FAMAT Bubbler](floridamao.github.io)
+# [FAMAT Bubbler](https://floridamao.github.io)
 A webpage that will let you automatically create a pdf of FAMAT answersheets, that already have their IDs bubbled in.
 You can look at an example here: https://github.com/AnirudhRahul/FAMATBubbler/blob/master/example.pdf
 ## Why use this?
