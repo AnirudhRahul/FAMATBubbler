@@ -14,5 +14,5 @@ If you have found any bugs, or just have a suggestion please report them on the 
 This webpage uses the JSPDF library to edit [AnswerSheet.pdf](http://famat.org/Downloadable/AnswerSheet.pdf)
 
 
-### License
+## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
