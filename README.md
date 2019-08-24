@@ -9,3 +9,5 @@ Please note that this website was only thoroughly tested on _Google Chrome_ for 
 
 If you have an suggestions or find any bugs please report them on the issues tab above
 
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
