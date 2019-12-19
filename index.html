@@ -61,9 +61,7 @@
   <button type="button" onclick="filterStudentList()">Filter Student List</button>
   <p class="error" id="error2"></p>
 
-  <h4> Action </h4>
-  <input type="radio" name="actionType" value="only">Only select students on filter list<br>
-  <input type="radio" name="actionType" value="remove">Remove students on filter list<br>
+
   <h4> Order </h4>
   <input type="radio" name="orderType" value="firstlast"> FirstName + Delimiter + LastName<br>
   <input type="radio" name="orderType" value="lastfirst"> LastName + Delimiter + FirstName<br>
@@ -182,7 +180,7 @@
   var green=[true];
   var counter = 1;
   var schoolName;
-  function deleteRow(index){
+  function flipRow(index){
     var element = document.getElementById("students").rows[index];
     var img = element.getElementsByTagName("img")[0];
     if(green[index]){
@@ -195,6 +193,20 @@
     }
     console.log(img.src);
     green[index]=(!green[index]);
+  }
+  function setGreen(index){
+    var element = document.getElementById("students").rows[index];
+    var img = element.getElementsByTagName("img")[0];
+    element.style.backgroundColor=lightGreen;
+    img.src=cross;
+    green[index]=true;
+  }
+  function setRed(index){
+    var element = document.getElementById("students").rows[index];
+    var img = element.getElementsByTagName("img")[0];
+    element.style.backgroundColor=lightRed;
+    img.src=check;
+    green[index]=false;
   }
   function addRow(){
     var newRow=document.getElementById("students").getElementsByTagName('tbody')[0].insertRow(counter);
@@ -239,11 +251,16 @@
   function clearRows(){
     for(var i=1;i<green.length;i+=1)
         if(green[i])
-          deleteRow(i);
+          setRed(i);
   }
+  function clearError(){
+    document.getElementById("error2").innerHTML="";
+  }
+
   function filterStudentList(){
     var delimeter=document.getElementById("delimiter").value;
-    if(!(getAction()&&getOrder())){
+    clearError();
+    if(!getOrder()){
       document.getElementById("error2").innerHTML+='Error Missing Input Fields<br>';
       return false;
     }
@@ -251,16 +268,16 @@
       document.getElementById("error2").innerHTML+='Error Missing Delimeter<br>';
       return false;
     }
-    var action=getAction();
     var order=getOrder();
-    if(action=='only')
-      clearRows();
+    clearRows();
+
     var text = document.getElementById("filter").value.trim();
     console.log(text);
     var lines = text.split('\n');
     console.log(lines);
     var table = document.getElementsByTagName("tbody")[0];
     var kids = table.getElementsByTagName("td");
+    var notMatched = []
     for(var i=0;i<lines.length;i++){
       try{
         var line = lines[i];
@@ -270,33 +287,32 @@
           toMatch=split[0]+' '+split[1];
         else
           toMatch=split[1]+' '+split[0];
+        var found = false;
         for(var k=0;k<kids.length;k+=2){
           var name = kids[k].innerText;
-          var matched = name==toMatch
-          if(matched&&action=='only'){
-            deleteRow(k/2+1);
-          }
-          if(matched&&action!='only'){
-            if(green[k/2+1])
-              deleteRow(k/2+1);
+          var matched = name.toLowerCase()==toMatch.toLowerCase();
+          if(matched){
+            setGreen(k/2+1);
+            found=true;
           }
         }
+        if(!found)
+          notMatched.push(line);
+
       }catch(err){
         document.getElementById("error2").innerHTML+='Row #'+(i+1)+' '+err+'<br>';
+      }
+    }
+    if(notMatched.length>0){
+      document.getElementById("error2").innerHTML+='Did not match:<br>';
+      for(var i=0;i<notMatched.length;i++){
+        document.getElementById("error2").innerHTML+=notMatched[i]
       }
     }
     scrollTo(0,690);
     console.log('FILTERED')
   }
-  function getAction(){
-    var radios = document.getElementsByName('actionType');
 
-    for (var i = 0, length = radios.length; i < length; i++)
-     if (radios[i].checked)
-      return radios[i].value
-
-    return false;
-  }
   function getOrder(){
     var radios = document.getElementsByName('orderType');
 
