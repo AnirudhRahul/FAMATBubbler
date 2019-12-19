@@ -210,7 +210,7 @@
   }
   function addRow(){
     var newRow=document.getElementById("students").getElementsByTagName('tbody')[0].insertRow(counter);
-    newRow.innerHTML = '<td><span id="A2" class="nameCol" contenteditable></span></td><td><span id="B2" class="idCol" contenteditable></span></td><th><input type="checkbox" class="teamBox" name=""></th><th><image class="x" type="button" onclick="deleteRow('+counter+')" src="'+cross+'" width="24"/></th>'
+    newRow.innerHTML = '<td><span id="A2" class="nameCol" contenteditable></span></td><td><span id="B2" class="idCol" contenteditable></span></td><th><input type="checkbox" class="teamBox" name=""></th><th><image class="x" type="button" onclick="flipRow('+counter+')" src="'+cross+'" width="24"/></th>'
     newRow.style.backgroundColor=lightGreen;
     green.push(true);
     counter++;
@@ -218,7 +218,7 @@
   }
   function addRow(name, id){
     var newRow=document.getElementById("students").getElementsByTagName('tbody')[0].insertRow(counter);
-    newRow.innerHTML = '<td><span id="A2" class="nameCol" contenteditable>'+name+'</span></td><td><span id="B2" class="idCol" contenteditable>'+id+ '</span></td><th><input type="checkbox" class="teamBox" name=""></th><th><image class="x" type="button" onclick="deleteRow('+counter+')" src="'+cross+'" width="24"/></th>'
+    newRow.innerHTML = '<td><span id="A2" class="nameCol" contenteditable>'+name+'</span></td><td><span id="B2" class="idCol" contenteditable>'+id+ '</span></td><th><input type="checkbox" class="teamBox" name=""></th><th><image class="x" type="button" onclick="flipRow('+counter+')" src="'+cross+'" width="24"/></th>'
     newRow.style.backgroundColor=lightGreen;
     green.push(true);
     counter++;
