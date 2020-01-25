@@ -282,10 +282,12 @@
       try{
         var line = lines[i];
 	var split='';
-	if(delimeter=='whitespace')
-		split = line.split(/\b\s+(?!$)/));
-	else
-        	split = line.split(delimeter);
+	if(delimeter=='whitespace'){
+	   split = line.split(/\b\s+(?!$)/));
+	}
+	else{
+           split = line.split(delimeter);
+	}
         var toMatch='';
         if(order=='firstlast')
           toMatch=split[0]+' '+split[1];
