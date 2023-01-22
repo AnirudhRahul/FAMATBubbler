@@ -225,24 +225,29 @@
     return false;
   }
   function readEnrollment(){
+    const nameRe = /(.*?), (.*?) (?:Algebra|Geometry|Precalculus|Calculus|Statistics)/;
+
     var text = document.getElementById("enrollment").value.trim();
     var lines = text.split('\n');
     var name = '';
     for(var i in lines){
       var line = lines[i];
-      if(line.startsWith('Enrollment list for:')){
+      if(line.startsWith('Roster:')){
         var start = line.indexOf(': ');
-        var end = line.indexOf('#')
+        var end = line.indexOf(' #');
         schoolName=line.substring(start+2,end).trim();
       }
-      else if(line.startsWith('Student Name Division ')){
+      else if(line.startsWith('Student Name Division ') || !line){
 
       }
       else{
         var words = line.split(' ');
         var id = words[words.length-3]+words[words.length-2]+words[words.length-1];
-        var nameList = words[0].split(',')
-        addRow(nameList[1]+' '+nameList[0],id.substring(0,8));
+        const names = nameRe.exec(line);
+        const firstName = names[2];
+        const lastName = names[1];
+        console.log(lastName);
+        addRow(firstName+' '+lastName,id.substring(0,8));
       }
     }
     document.getElementById("school").value=schoolName;
